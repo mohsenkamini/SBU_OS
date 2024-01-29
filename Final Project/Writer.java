@@ -3,9 +3,9 @@ import java.util.Random;
 
 public class Writer implements Runnable {
     private Semaphore rw_mutex,full;
-    private FlexibleQueue<String> queue;
+    private FlexibleQueue queue;
     private String input;
-    public Writer(Semaphore rw_mutex,FlexibleQueue<String> queue,String input,Semaphore full) {
+    public Writer(Semaphore rw_mutex,FlexibleQueue queue,String input,Semaphore full) {
         this.rw_mutex = rw_mutex;
         this.full = full;
         this.queue = queue;

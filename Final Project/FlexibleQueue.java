@@ -1,8 +1,8 @@
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class FlexibleQueue<T> {
-    private final Queue<T> queue;
+public class FlexibleQueue {
+    private final Queue<String> queue;
     private final int capacity;
     private final boolean isBounded;
     private int size;
@@ -24,7 +24,7 @@ public class FlexibleQueue<T> {
         this.size = 0;
     }
 
-    public void add(T element) {
+    public void add(String element) {
         if (isBounded && size >= capacity) {
             throw new IllegalStateException("Queue capacity exceeded");
         }
@@ -32,8 +32,8 @@ public class FlexibleQueue<T> {
         size++;
     }
 
-    public T remove() {
-        T element = queue.poll();
+    public String remove() {
+        String element = queue.poll();
         if (element != null) {
             size--;
         }
@@ -46,5 +46,13 @@ public class FlexibleQueue<T> {
 
     public int size() {
         return size;
+    }
+
+    public int sumOfLength() {
+        int result = 0;
+        for (String element : queue) {
+            result += element.length();
+        }
+        return result;
     }
 }

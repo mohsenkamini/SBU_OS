@@ -2,7 +2,7 @@ import java.util.concurrent.Semaphore;
 
 public class Main {
     public static void main(String[] args) {
-        FlexibleQueue<String> queue = new FlexibleQueue<String>();
+        FlexibleQueue queue = new FlexibleQueue();
         Semaphore rw_mutex = new Semaphore(1);
         Semaphore mutex = new Semaphore(1);
         Semaphore full = new Semaphore(0);

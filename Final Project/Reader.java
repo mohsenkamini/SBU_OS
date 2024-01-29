@@ -2,10 +2,10 @@ import java.util.concurrent.Semaphore;
 
 public class Reader implements Runnable{
     private Semaphore rw_mutex,mutex,full;
-    private FlexibleQueue<String> queue;
+    private FlexibleQueue queue;
     private int read_count;
 
-    public Reader(Semaphore rw_mutex, FlexibleQueue<String> queue, Semaphore mutex, Semaphore full) {
+    public Reader(Semaphore rw_mutex, FlexibleQueue queue, Semaphore mutex, Semaphore full) {
         this.rw_mutex = rw_mutex;
         this.mutex = mutex;
         this.full = full;
