@@ -1,0 +1,21 @@
+typedef struct barrier {
+    semaphore sem;
+    semaphore mutex;
+    int *N;
+    int threadCounter;
+}Barrier;
+
+void init (Barrier *b , int M, int Ns[]) {
+    b->sem=0;
+    b->mutex=1;
+    b->N = Ns;
+    b->threadCounter=0
+}
+
+void barrier_point (Barrier *b, int group) {
+    wait(b->mutex)
+    threadCounter++;
+    signal(b->mutex)
+    
+        wait(b-> sem)
+}
