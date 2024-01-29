@@ -2,11 +2,11 @@ import java.util.concurrent.Semaphore;
 import java.util.Random;
 
 public class Writer implements Runnable {
-    private Semaphore rw_mutex,full;
+    private Semaphore wmutex,full;
     private FlexibleQueue queue;
     private String input;
-    public Writer(Semaphore rw_mutex,FlexibleQueue queue,String input,Semaphore full) {
-        this.rw_mutex = rw_mutex;
+    public Writer(Semaphore wmutex,FlexibleQueue queue,String input,Semaphore full) {
+        this.wmutex = wmutex;
         this.full = full;
         this.queue = queue;
         this.input = input;
@@ -15,7 +15,7 @@ public class Writer implements Runnable {
         try {
             Random random = new Random();
             int waitTime = random.nextInt(5); 
-            rw_mutex.acquire(); 
+            wmutex.acquire(); 
             Thread.sleep(waitTime*1000);
             this.queue.add(this.input);
             System.out.println("Writer: added '"+this.input+"'");
@@ -24,7 +24,7 @@ public class Writer implements Runnable {
             // Handle the interruption
         } finally {
             full.release();
-            rw_mutex.release(); 
+            wmutex.release(); 
         }
     }
 }

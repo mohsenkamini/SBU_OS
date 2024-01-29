@@ -3,17 +3,17 @@ import java.util.concurrent.Semaphore;
 public class Main {
     public static void main(String[] args) {
         FlexibleQueue queue = new FlexibleQueue();
-        Semaphore rw_mutex = new Semaphore(1);
-        Semaphore mutex = new Semaphore(1);
+        Semaphore wmutex = new Semaphore(1);
+        Semaphore rmutex = new Semaphore(1);
         Semaphore full = new Semaphore(0);
-        Thread wthread = new Thread(new Writer(rw_mutex,queue,"something",full));
-        Thread wthread1 = new Thread(new Writer(rw_mutex,queue,"something1",full));
-        Thread wthread2 = new Thread(new Writer(rw_mutex,queue,"something2",full));
-        Thread wthread3 = new Thread(new Writer(rw_mutex,queue,"something3",full));
-        Thread rthread = new Thread(new Reader(rw_mutex,queue,mutex,full));
-        Thread rthread1 = new Thread(new Reader(rw_mutex,queue,mutex,full));
-        Thread rthread2 = new Thread(new Reader(rw_mutex,queue,mutex,full));
-        Thread rthread3 = new Thread(new Reader(rw_mutex,queue,mutex,full));
+        Thread wthread = new Thread(new Writer(wmutex,queue,"something",full));
+        Thread wthread1 = new Thread(new Writer(wmutex,queue,"something1",full));
+        Thread wthread2 = new Thread(new Writer(wmutex,queue,"something2",full));
+        Thread wthread3 = new Thread(new Writer(wmutex,queue,"something3",full));
+        Thread rthread = new Thread(new Reader(rmutex,queue,full));
+        Thread rthread1 = new Thread(new Reader(rmutex,queue,full));
+        Thread rthread2 = new Thread(new Reader(rmutex,queue,full));
+        Thread rthread3 = new Thread(new Reader(rmutex,queue,full));
 
         
         wthread.start();
@@ -27,7 +27,7 @@ public class Main {
 
 
         //for (int i = 0; i < 5; i++) {
-        //    Thread rthread = new Thread(new Reader(rw_mutex, queue, mutex, full));
+        //    Thread rthread = new Thread(new Reader(wmutex, queue, mutex, full));
         //    try {
         //        rthread.start();
         //        rthread.join();
