@@ -1,26 +1,8 @@
 import java.util.concurrent.Semaphore;
-import java.lang.management.ManagementFactory;
-import java.lang.management.MemoryMXBean;
-import java.lang.management.MemoryUsage;
 
-public class Main {
-
-
-    public static void stats(FlexibleQueue queue) {
-        System.out.println("STATS=============================");
-        System.out.println("Number of products: "+queue.size());
-        System.out.println("Sum of length of all products: "+queue.sumOfLength());
-        // get mem usage
-        MemoryMXBean memoryBean = ManagementFactory.getMemoryMXBean();
-        MemoryUsage heapMemoryUsage = memoryBean.getHeapMemoryUsage();
-        MemoryUsage nonHeapMemoryUsage = memoryBean.getNonHeapMemoryUsage();
-        long totalMemoryUsage = heapMemoryUsage.getUsed() + nonHeapMemoryUsage.getUsed();
-        System.out.println("Total Memory Usage: " + totalMemoryUsage / (1024 * 1024) + " MB");
-        System.out.println("==================================");
-    }
+public class NonBlockingTest {
     public static void main(String[] args) {
-        FlexibleQueue queue = new FlexibleQueue();
-        //FlexibleQueue queue = new FlexibleQueue(3);
+        FlexibleQueue queue = new FlexibleQueue(3);
         Semaphore wmutex = new Semaphore(1);
         Semaphore rmutex = new Semaphore(1);
         Semaphore full = new Semaphore(0);
@@ -32,11 +14,12 @@ public class Main {
         Thread wthread5 = new Thread(new Writer(wmutex,queue,"othsomething5",full));
         Thread wthread6 = new Thread(new Writer(wmutex,queue,"something6",full));
         Thread wthread7 = new Thread(new Writer(wmutex,queue,"something7",full));
-        
-        Thread rthread = new Thread(new Reader(rmutex,queue,full , true));
-        Thread rthread1 = new Thread(new Reader(rmutex,queue,full, true));
+
+        Thread rthread = new Thread(new Reader(rmutex,queue,full , false));
+        Thread rthread1 = new Thread(new Reader(rmutex,queue,full, false));
         Thread rthread2 = new Thread(new Reader(rmutex,queue,full, true));
         Thread rthread3 = new Thread(new Reader(rmutex,queue,full, true));
+
 
         rthread.start();        
         wthread.start();
@@ -45,7 +28,7 @@ public class Main {
         wthread3.start();
         rthread1.start();
         rthread2.start();
-        rthread3.start();
+        //rthread3.start();
         wthread4.start();
         wthread5.start();
         wthread6.start();
