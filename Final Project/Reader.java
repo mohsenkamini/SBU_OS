@@ -22,7 +22,7 @@ public class Reader implements Runnable{
                 full.acquire(); // comment for non-blocking
                 rmutex.acquire();
                 read_count++;
-                System.out.println("Reader: removed '"+this.queue.remove()+"'");
+                System.out.println("Reader: removed '"+this.queue.remove()+"' from "+queue.toString());
                 read_count--;
                 System.out.println("Reader: queue size is "+this.queue.size());
             } else {

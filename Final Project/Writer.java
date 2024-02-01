@@ -18,7 +18,7 @@ public class Writer implements Runnable {
             wmutex.acquire(); 
             Thread.sleep(waitTime*1000);
             this.queue.add(this.input);
-            System.out.println("Writer: added '"+this.input+"'");
+            System.out.println("Writer: added '"+this.input+"' to "+queue.toString());
             //System.out.println("Writer: queue size is "+this.queue.size());
             Main.stats(this.queue);
 
