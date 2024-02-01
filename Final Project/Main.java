@@ -43,6 +43,16 @@ public class Main {
         wthread1.start();
         wthread2.start();
         wthread3.start();
+        
+        try {
+            wthread1.join();
+            wthread2.join();
+            wthread3.join();
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
         rthread1.start();
         rthread2.start();
         rthread3.start();
